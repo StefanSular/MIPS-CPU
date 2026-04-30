@@ -1,0 +1,71 @@
+ASM:
+0: ADDI $1, $0, 0
+1: ADDI $2, $0, 0 -- initializez registrii cu o valoare cunoscuta 0
+2: LW $1, 0($0)   -- pun in registrul 1 X (de la adresa 0)
+3: LW $2, 4($0)   -- pun in registrul 2 Y (de la adresa 4)
+4: ADDI $3, $0, 8 -- initializez locatia de memorie a rezultatului + val. initiale 
+5: SW $1, 0($3)   -- pun la adresa 8 val lui x
+6: ADDI $3, $3, 4 -- cresc indicele de locatie a mem cu 4
+7: SW $2, 0($3)   -- pun la adresa 12 valoare lui Y
+8: ADDI $3, $3, 4 -- cresc indicele de locatie a mem cu 4
+9: BEQ $1, $2, 9  -- verific daca X==Y dau jump la cate linii am in acel loop
+10: SLT $4, $1, $2 -- verific daca X<Y, rez il pun in registrul 4
+11: BNE $4, $0, 3  -- Daca X<Y atunci sari si fa Y=Y-X
+12: SUB $1, $1, $2 --  X=X-Y
+13: SW $1, 0($3)   -- salveaza noua valoare a lui X
+14: J 17           -- sari la linia 17 pentru a creste contorul de memorie
+15: SUB $2, $2, $1 -- Y=Y-X
+16: SW $2, 0($3)   -- salveaza noua valoare a lui Y
+17: ADDI $3, $3, 4 -- pregateste adresa urmatoare
+18: J 9            -- jump la linia 9
+19: ADDI $4, $0, 0 -- initializeaza cu 0 reg 4
+20: ADDI $4, $0, 8 -- stim ca incepe de la adresa 8 si se termina la $3
+21: BEQ $4, $3, 3  -- citim elementele sirului pana cand $4=$3 ($4= adresa curenta, $3=adresa finala)
+22: LW $5, 0($4)   -- luam elementu de pe pozitia $4 si o punem in $5
+23: ADDI $4, $4, 4 -- mergem cu iteratia mai departe
+24: J 21           -- sari la linia 21
+
+
+BINAR:
+0: 001000_00000_00001_0000000000000000
+1: 001000_00000_00010_0000000000000000
+2: 100011_00000_00001_0000000000000000
+3: 100011_00000_00010_0000000000000100
+4: 001000_00000_00011_0000000000001000
+5: 101011_00011_00001_0000000000000000
+6: 001000_00011_00011_0000000000000100
+7: 101011_00011_00010_0000000000000000
+8: 001000_00011_00011_0000000000000100
+9: 000100_00001_00010_0000000000001001
+10: 000000_00001_00010_00100_00000_000110
+11: 000101_00100_00000_0000000000000011
+12: 000000_00001_00010_00001_00000_000001
+13: 101011_00011_00001_0000000000000000
+14: 000010_00000000000000000000010001
+15: 000000_00010_00001_00010_00000_000001
+16: 101011_00011_00010_0000000000000000
+17: 001000_00011_00011_0000000000000100
+18: 000010_00000000000000000000001001
+19: 001000_00000_00100_0000000000000000
+20: 001000_00000_00100_0000000000001000
+21: 000100_00100_00011_0000000000000011
+22: 100011_00100_00101_0000000000000000
+23: 001000_00100_00100_0000000000000100
+24: 000010_00000000000000000000010101
+
+
+
+
+
+SUMA 3 ELEM DIN VEECTOR:
+b"001000_00000_00001_0000000000000000", -- 0: indexul i
+b"001000_00000_00010_0000000000000011", -- 1: numar total de elem
+b"001000_00000_00011_0000000000000000", -- 2: adresa de pornire (0) a vectorului
+b"001000_00000_00100_0000000000000000", -- 3: suma =0
+b"000100_00001_00010_0000000000000101", -- 4: 
+b"100011_00011_00101_0000000000000000", -- 5: pune in reg[5] elem cu elem
+b"000000_00101_00100_00100_00000_100000", -- 6: aduna in suma fiecare elem
+b"001000_00011_00011_0000000000000100", -- 7: reg[3] merge la urm adresa din vector
+b"001000_00001_00001_0000000000000001", -- 8: crestem indexul
+b"000010_00000000000000000000000100", -- 9: 
+b"101011_00011_00100_0000000000000000", -- 10: punem suma la finalul vectorului
