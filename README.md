@@ -1,1 +1,1 @@
-Still in progress
+Still in progress to implement a pipelined MIPS processor 
